@@ -43,11 +43,11 @@
 <h1>Interactive EIS Simulator</h1>
 <p>
        Explore electrochemical impedance spectroscopy
-       by modifying equivalent circuit parameters and
-       observing their effects on Nyquist and Bode plots.
+       by modifying equivalent circuit component parameters and
+       observing the effects on Nyquist and Bode plots.
 </p>
 </header>
-<div id="status">Loading your EIS simulator...</div>
+<div id="status">Loading EIS simulator</div>
 <div id="calculator"></div>
 <footer>
 <a href="https://www.desmos.com/calculator/pdtwjcjl2t"
@@ -67,11 +67,11 @@
                }
            });
            if (!response.ok) {
-               throw new Error("Could not retrieve the saved graph.");
+               throw new Error("Could not retrieve the saved graph");
            }
            const graphData = await response.json();
            if (!graphData.state) {
-               throw new Error("The saved graph state was not found.");
+               throw new Error("The saved graph state was not found");
            }
            const calculator = Desmos.GraphingCalculator(
                document.getElementById("calculator"),
@@ -84,7 +84,7 @@
            );
            calculator.setState(graphData.state);
            status.textContent =
-               "Simulator loaded successfully! Modify the parameters on the left.";
+               "Simulator loaded successfully";
        } catch (error) {
            status.textContent =
                "Unable to load the simulator: " + error.message;
