@@ -1,2 +1,2 @@
-# eis-simulator.github.io
+# eis-simulator
 Interactive Electrochemical Impedance Spectroscopy (EIS) Simulator
