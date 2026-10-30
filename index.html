@@ -1,1 +1,97 @@
-<iframe src="https://www.desmos.com/calculator/pdtwjcjl2t?embed" width="500" height="500" style="border: 1px solid #ccc" frameborder=0></iframe>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Interactive EIS Simulator</title>
+<script src="https://www.desmos.com/api/v1.12/calculator.js?apiKey=904bae0281124190ab6a5bab1c4e9e4b"></script>
+<style>
+       body {
+           margin: 0;
+           font-family: Arial, sans-serif;
+           background: #f5f7fa;
+           color: #222;
+       }
+       header {
+           padding: 20px;
+           text-align: center;
+       }
+       h1 {
+           margin-bottom: 8px;
+       }
+       #status {
+           text-align: center;
+           padding: 10px;
+           color: #555;
+       }
+       #calculator {
+           width: 100%;
+           height: 80vh;
+           min-height: 550px;
+       }
+       footer {
+           text-align: center;
+           padding: 20px;
+       }
+       a {
+           color: #2563eb;
+       }
+</style>
+</head>
+<body>
+<header>
+<h1>Interactive EIS Simulator</h1>
+<p>
+       Explore electrochemical impedance spectroscopy
+       by modifying equivalent circuit parameters and
+       observing their effects on Nyquist and Bode plots.
+</p>
+</header>
+<div id="status">Loading your EIS simulator...</div>
+<div id="calculator"></div>
+<footer>
+<a href="https://www.desmos.com/calculator/pdtwjcjl2t"
+      target="_blank">
+      Open original graph in Desmos
+</a>
+</footer>
+<script>
+   const graphURL =
+       "https://www.desmos.com/calculator/pdtwjcjl2t";
+   const status = document.getElementById("status");
+   async function loadSimulator() {
+       try {
+           const response = await fetch(graphURL, {
+               headers: {
+                   "Accept": "application/json"
+               }
+           });
+           if (!response.ok) {
+               throw new Error("Could not retrieve the saved graph.");
+           }
+           const graphData = await response.json();
+           if (!graphData.state) {
+               throw new Error("The saved graph state was not found.");
+           }
+           const calculator = Desmos.GraphingCalculator(
+               document.getElementById("calculator"),
+               {
+                   expressions: true,
+                   settingsMenu: true,
+                   keypad: true,
+                   zoomButtons: true
+               }
+           );
+           calculator.setState(graphData.state);
+           status.textContent =
+               "Simulator loaded successfully! Modify the parameters on the left.";
+       } catch (error) {
+           status.textContent =
+               "Unable to load the simulator: " + error.message;
+           console.error(error);
+       }
+   }
+   loadSimulator();
+</script>
+</body>
+</html>
